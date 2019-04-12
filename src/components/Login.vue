@@ -1,27 +1,33 @@
 <template>
 <div class="container">
     <x-header :right-options="{showMore: False}"  :left-options="{showBack: ture}">Login</x-header>
-  <x-input title="手机号" mask="999 9999 9999"  :max="13" is-type="china-mobile"></x-input>
-  <x-input title="密码"  :max="13" type="password" ></x-input>
+  <x-input title="手机号" mask="999 9999 9999"  :max="13"   is-type="china-mobile"></x-input>
+  <x-input title="密码" :max="13" type="password" v-model="password" ></x-input>
   <x-button @click.native="Login">登录</x-button>
-   </div>
+</div>
 </template>
 
 <script>
-import { XButton, XInput, XHeader } from 'vux'
+import { XButton, XInput, XHeader, AlertModule, Alert } from 'vux'
 
 export default {
   name: 'HelloWorld',
   data () {
     return {
+      password: '',
       msg: 'Welcome to Your Vue.js App'
     }
   },
   methods: {
     Login () {
-      window.history.length > 1
-        ? this.$router.go(-1)
-        : this.$router.push('/')
+      if (this.password === '123456') {
+        this.$router.push('/')
+      } else {
+        AlertModule.show({
+          title: '登录失败',
+          content: '请重新登陆！'
+        })
+      }
     }
   },
   HelloFromVux: {
@@ -32,7 +38,8 @@ export default {
   components: {
     XButton,
     XInput,
-    XHeader
+    XHeader,
+    Alert
   }
 }
 </script>
